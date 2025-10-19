@@ -32,7 +32,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const location = useLocation();
 	const [expandedGroups, setExpandedGroups] = React.useState<Record<string, boolean>>({});
 
-	const role = userData?.data?.data?.role;
+	const role = userData?.data.role;
 	const data = {
 		navMain: getSidebarItems(role as TRole),
 	};
@@ -76,11 +76,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<div className="p-4 border-b border-gray-200 dark:border-gray-800">
 				<div className="flex items-center space-x-3">
 					<div className="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center text-white font-bold text-lg">
-						{userData?.data?.data?.name?.charAt(0) || "U"}
+						{userData?.data.name?.charAt(0) || "U"}
 					</div>
 					<div className="flex-1 min-w-0">
-						<p className="font-medium truncate">{userData?.data?.data?.name || "User"}</p>
-						<p className="text-sm text-gray-500 dark:text-gray-400 truncate">{userData?.data?.data?.role || "Member"}</p>
+						<p className="font-medium truncate">{userData?.data.name || "User"}</p>
+						<p className="text-sm text-gray-500 dark:text-gray-400 truncate">{userData?.data.role || "Member"}</p>
 					</div>
 					<button className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
 						<FiBell className="text-gray-600 dark:text-gray-300" />

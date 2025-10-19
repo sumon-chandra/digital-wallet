@@ -15,7 +15,7 @@ const MyProfile = () => {
 	});
 
 	// Using optional chaining to safely access data
-	const myProfile = data?.data?.data;
+	const myProfile = data?.data;
 
 	const [form, setForm] = useState({
 		name: "",
@@ -48,7 +48,7 @@ const MyProfile = () => {
 		);
 	}
 
-	const { name, email, role, phone, address, is_verified, createdAt } = myProfile;
+	const { name, email, role, phone, address, isEmailVerified, createdAt } = myProfile;
 
 	const initial = `${name ? name.charAt(0) : ""}`.toUpperCase();
 	const formattedCreatedAt = new Date(createdAt ?? Date.now()).toLocaleDateString("en-US", {
@@ -116,7 +116,7 @@ const MyProfile = () => {
 		},
 		{
 			label: "Status",
-			value: is_verified ? "Verified" : "Unverified",
+			value: isEmailVerified ? "Verified" : "Unverified",
 			colSpan: "sm:col-span-1",
 			badge: true,
 		},
@@ -171,7 +171,7 @@ const MyProfile = () => {
 			name={name}
 			email={email}
 			role={role}
-			is_verified={is_verified}
+			is_verified={isEmailVerified}
 			onEditClick={handleEditClick}
 			onSubmit={handleSubmit}
 			onChange={handleChange}

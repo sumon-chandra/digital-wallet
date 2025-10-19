@@ -4,17 +4,17 @@ import type { ComponentType } from "react";
 import { Navigate } from "react-router";
 
 export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
-  return function AuthWrapper() {
-    const { data: profileData, isLoading } = useGetMyProfileQuery();
+	return function AuthWrapper() {
+		const { data: profileData, isLoading } = useGetMyProfileQuery();
 
-    if (!isLoading && !profileData?.data?.data.email) {
-      return <Navigate to="/login" />;
-    }
+		if (!isLoading && !profileData?.data.email) {
+			return <Navigate to="/login" />;
+		}
 
-    if (requiredRole && !isLoading && requiredRole !== profileData?.data?.data.role) {
-      return <Navigate to="/unauthorized" />;
-    }
+		if (requiredRole && !isLoading && requiredRole !== profileData?.data?.role) {
+			return <Navigate to="/unauthorized" />;
+		}
 
-    return <Component />;
-  };
+		return <Component />;
+	};
 };

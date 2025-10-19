@@ -38,8 +38,8 @@ export default function Navbar() {
 	const [logout] = useLogoutUserMutation();
 	const dispatch = useDispatch();
 	const location = useLocation();
-	const userData = profileData?.data?.data;
-	console.log("User Data in Navbar:", profileData);
+	const userData = profileData?.data;
+	console.log("🧑‍💼 User Data in Navbar:", userData);
 
 	const isAuthenticated = !!userData;
 
@@ -125,7 +125,7 @@ export default function Navbar() {
 								<DropdownMenuTrigger className="outline-none">
 									<motion.div whileHover={{ scale: 1.05 }}>
 										<Avatar className="border border-border cursor-pointer hover:border-primary transition-colors">
-											<AvatarImage src={userData.profilePic || "https://via.placeholder.com/40"} alt={userData.name} />
+											<AvatarImage src={userData.photoUrl || "https://via.placeholder.com/40"} alt={userData.name} />
 											<AvatarFallback className="bg-muted">
 												<UserIcon className="text-muted-foreground" size={18} />
 											</AvatarFallback>

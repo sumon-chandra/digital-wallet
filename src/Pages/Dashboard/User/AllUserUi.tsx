@@ -80,7 +80,7 @@ function AllUserUi<T extends User>({ data }: AllUserUiProps<T>) {
 											title="Copy ID"
 										>
 											<IdCard className="h-3 w-3 mr-1" />
-											<span className="truncate max-w-[80px]">ID: {item._id.slice(-6)}</span>
+											<span className="truncate max-w-[80px]">ID: {item._id}</span>
 											<div className="ml-1 opacity-0 group-hover/copy:opacity-100 transition-opacity">
 												{copiedId === item._id ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
 											</div>
