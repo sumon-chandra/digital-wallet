@@ -2,31 +2,14 @@ import QuickActionUi from "./QuickActionUi";
 import WalletBalanceUi from "./WalletBalanceUi";
 import TotalUserAgent from "./TotalUserAgent";
 import { getSidebarItems } from "@/utils/getSidebarItems";
-import { useGetMyProfileQuery, useGetYourWalletQuery, useGetYourTransQuery } from "@/redux/api/userApi";
-import {
-	useGetAllUserQuery,
-	useGetAllAgentQuery,
-	useGetAllTransQuery,
-	useGetAllCommissionQuery,
-	useGetCapitalWalletQuery,
-} from "@/redux/api/adminApi";
+import { useGetMyProfileQuery, useGetYourWalletQuery } from "@/redux/api/userApi";
+import { useGetAllUserQuery, useGetAllAgentQuery, useGetAllTransQuery, useGetCapitalWalletQuery } from "@/redux/api/adminApi";
 import type { TRole } from "@/types/auth.type";
-import { useGetCommissionQuery } from "@/redux/api/agent.api";
 import RecentActivitiesUi from "./RecentActivitiesUi";
 
 const Overview = () => {
 	const { data: userData } = useGetMyProfileQuery(undefined);
-	const { data: agentCommissionData } = useGetCommissionQuery(undefined);
 	const { data: walletData, isLoading: isWalletLoading } = useGetYourWalletQuery(undefined);
-
-	const limit = 3;
-	const page = 1;
-
-	const { data: transData, isLoading: isTransLoading } = useGetYourTransQuery({
-		page,
-		limit,
-	});
-
 	const role = userData?.data?.role;
 	const sidebarItems = getSidebarItems(role as TRole);
 
@@ -35,37 +18,38 @@ const Overview = () => {
 	// Admin Data Fetching
 	const { data: allUsers } = useGetAllUserQuery();
 	const { data: allAgents } = useGetAllAgentQuery();
-	const { data: allTrans } = useGetAllTransQuery({ page: 1, limit: 4 });
-	const { data: allCommission } = useGetAllCommissionQuery();
+	const { data: allTrans, isLoading: isTransLoading } = useGetAllTransQuery({ page: 1, limit: 4 });
 	const { data: capitalWallet } = useGetCapitalWalletQuery();
-	// console.log("allTrans", allTrans?.data.meta.total);
-	console.log("agentCommissionData", agentCommissionData?.data.data);
-	// console.log("capitalWallet", capitalWallet?.data.data[0].balance);
+
 	return (
 		<div className="space-y-6">
 			{/* Wallet Balance Section */}
-			<WalletBalanceUi balance={walletData?.data?.data[0]?.balance || capitalWallet?.data.data[0].balance} loading={isWalletLoading} role={role} />
+			{role !== "ADMIN" && (
+				<div>
+					<h3 className="text-lg font-semibold">Wallet Balance</h3>
+					<WalletBalanceUi balance={walletData?.data?.data[0]?.balance || capitalWallet?.data.data[0].balance} loading={isWalletLoading} role={role} />
+				</div>
+			)}
 
 			{/* Quick Actions Section */}
-			<QuickActionUi actions={quickActions} />
-
-			{/* Recent Transactions Section */}
-			<RecentActivitiesUi
-				activities={transData?.data?.data || allTrans?.data?.data || agentCommissionData?.data.data || []}
-				loading={isTransLoading}
-				role={role}
-			/>
+			<div>
+				<h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+				<QuickActionUi actions={quickActions} />
+			</div>
 
 			{/* Admin Overview Section */}
 			{role === "ADMIN" && (
 				<TotalUserAgent
 					users={allUsers?.data || []}
 					agents={allAgents?.data || []}
-					transactions={allTrans?.data.meta.total || []}
-					commissions={allCommission?.data?.data || []}
+					transactions={allTrans?.data.meta.total || 0}
+					totalCommission={allTrans?.data.meta.totalCommission || 0}
 					data={undefined}
 				/>
 			)}
+
+			{/* Recent Transactions Section */}
+			<RecentActivitiesUi activities={allTrans?.data?.data || []} loading={isTransLoading} role={role} />
 		</div>
 	);
 };

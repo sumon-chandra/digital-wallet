@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useGetYourTransQuery } from "@/redux/api/userApi";
 import { useGetAllTransQuery } from "@/redux/api/adminApi";
 import { useLocation } from "react-router-dom";
-import SkeletonCard from "@/components/SkeletonCard";
+// import SkeletonCard from "@/components/SkeletonCard";
 import TransactionUi from "./TransactionUi";
-import type { Transaction } from "@/types/admin.type";
+import type { ITransaction } from "@/types/admin.type";
 import { User as UserIcon } from "lucide-react";
 import TransactionFilter from "@/components/TransactionFilter";
 import Pagination from "@/components/Pagination";
+import { TransactionSkeleton } from "./TransactionSkeleton";
 
 const AllTrans = () => {
 	const location = useLocation();
@@ -32,7 +33,7 @@ const AllTrans = () => {
 	});
 
 	const rawData = isAdmin ? adminData?.data?.data : userData?.data;
-	const data: Transaction[] = Array.isArray(rawData) ? rawData : rawData?.data ?? [];
+	const data: ITransaction[] = Array.isArray(rawData) ? rawData : rawData?.data ?? [];
 	const meta = isAdmin
 		? adminData?.data?.meta ?? { page, limit, total: 0, totalPage: 1 }
 		: userData?.data.meta ?? { page, limit, total: 0, totalPage: 1 };
@@ -44,14 +45,10 @@ const AllTrans = () => {
 			</h2>
 			<TransactionFilter onFilter={setFilters} />
 			<div className="flex flex-col max-h-max">
-				<div className="flex-1">
+				<div className="">
 					{/* Transactions grid */}
 					{isFetching ? (
-						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-							{[...Array(6)].map((_, i) => (
-								<SkeletonCard key={i} />
-							))}
-						</div>
+						[...Array(6)].map((_, i) => <TransactionSkeleton key={i} />)
 					) : !data || data.length === 0 ? (
 						<div className="text-center py-12">
 							<UserIcon style={{ color: "var(--card-foreground)" }} className="mx-auto h-12 w-12" />

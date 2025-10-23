@@ -66,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarHeader className="items-center p-4 border-b border-gray-200 dark:border-gray-800">
 				<div className="flex items-center justify-between w-full">
 					<Link to="/" className="flex items-center space-x-2">
-						<img src={logo} alt="WalletApp Logo" className="h-10 w-10 rounded-full object-cover" />
+						<img src={logo} alt="WalletApp Logo" className="size-8 object-cover" />
 						<span className="text-xl font-bold text-gray-900 dark:text-white">Digital Wallet</span>
 					</Link>
 				</div>
