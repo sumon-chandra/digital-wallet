@@ -65,9 +65,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			{/* Header */}
 			<SidebarHeader className="items-center p-4 border-b border-gray-200 dark:border-gray-800">
 				<div className="flex items-center justify-between w-full">
-					<Link to="/" className="flex items-center space-x-2">
+					<Link to={`/${role?.toLocaleLowerCase()}/dashboard`} className="flex items-center space-x-2">
 						<img src={logo} alt="WalletApp Logo" className="size-8 object-cover" />
-						<span className="text-xl font-bold text-gray-900 dark:text-white">Digital Wallet</span>
+						<span className="text-xl font-bold text-gray-900 dark:text-white">PayWallet</span>
 					</Link>
 				</div>
 			</SidebarHeader>
@@ -75,7 +75,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			{/* User info */}
 			<div className="p-4 border-b border-gray-200 dark:border-gray-800">
 				<div className="flex items-center space-x-3">
-					<div className="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center text-white font-bold text-lg">
+					<div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">
 						{userData?.data.name?.charAt(0) || "U"}
 					</div>
 					<div className="flex-1 min-w-0">
@@ -109,8 +109,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 											asChild
 											className={`mx-2 my-1 rounded-md transition-all duration-200 ${
 												location.pathname === item.url
-													? "bg-pink-600 text-white shadow-sm"
-													: "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+													? "bg-primary text-white shadow-sm"
+													: "text-gray-700 dark:text-gray-200 hover:bg-primary/80 dark:hover:bg-gray-800"
 											}`}
 										>
 											<Link to={item.url} className="flex items-center px-4 py-3">

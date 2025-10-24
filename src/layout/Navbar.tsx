@@ -141,7 +141,7 @@ export default function Navbar() {
 									{userData && (
 										<>
 											<DropdownMenuItem asChild className="cursor-pointer focus:bg-secondary focus:text-foreground">
-												<Link to={getDashboardPath(userData.role)} className="flex items-center gap-2">
+												<Link to={getDashboardPath(userData.role)} className="flex items-center gap-2" target="_blank">
 													<AlignStartVertical size={16} />
 													Dashboard
 												</Link>

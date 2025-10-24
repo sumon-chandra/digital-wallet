@@ -113,7 +113,7 @@ const WalletManagementByAdmin = ({ actionType }: WalletManagementProps) => {
 					disabled={buttonDisabled}
 					className={`w-full flex items-center justify-center gap-2 px-6 py-3 lg:px-8 lg:py-4 rounded-lg text-white font-semibold text-lg transition-colors ${
 						isAddMoney
-							? "bg-pink-600 hover:bg-pink-700 disabled:bg-pink-400"
+							? "bg-primary hover:bg-pink-700 disabled:bg-pink-400"
 							: status === "BLOCKED"
 							? "bg-rose-600 hover:bg-rose-700 disabled:bg-rose-400"
 							: "bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400"

@@ -101,7 +101,7 @@ const UpdateProfile = () => {
 						</div>
 						<Button
 							type="submit"
-							className="w-full bg-pink-500 hover:bg-pink-600 dark:bg-pink-400 dark:hover:bg-pink-500 text-white"
+							className="w-full bg-pink-500 hover:bg-primary dark:bg-pink-400 dark:hover:bg-pink-500 text-white"
 							disabled={isUpdateLoading}
 						>
 							{isUpdateLoading ? "Updating..." : "Update Profile"}
