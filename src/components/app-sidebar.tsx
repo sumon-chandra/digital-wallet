@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { LogOutIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { authApi, useLogoutUserMutation } from "@/redux/api/authApi";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { handleApiError } from "@/utils/handleApiError";
 import type { TRole } from "@/types/auth.type";
 import { getIcon } from "@/utils/getIcon";

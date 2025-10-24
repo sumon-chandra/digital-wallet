@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetMyProfileQuery, useUpdateMyProfileMutation } from "@/redux/api/userApi";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { handleApiError } from "@/utils/handleApiError";
 import { ProfileSkeleton } from "@/components/ProfileSkeleton";
 import MyProfileUi from "./MyProfileUi";
@@ -89,6 +89,7 @@ const MyProfile = () => {
 		}
 
 		try {
+			// console.log("Payload to be sent for update:", payload);
 			await updateProfile(payload).unwrap();
 			toast.success("Profile updated successfully!");
 			setIsEditing(false);

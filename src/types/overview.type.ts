@@ -6,6 +6,7 @@ export interface QuickActionUiProps {
 		title: string;
 		url: string;
 		icon?: string;
+		description?: string;
 	}[];
 }
 

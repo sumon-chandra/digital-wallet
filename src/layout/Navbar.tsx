@@ -18,7 +18,7 @@ import { authApi, useLogoutUserMutation } from "@/redux/api/authApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDispatch } from "react-redux";
 import { handleApiError } from "@/utils/handleApiError";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { getDashboardPath } from "@/utils/getDashboardPath";
 import { ModeToggle } from "./ModeToggler";
 import { motion } from "framer-motion";
