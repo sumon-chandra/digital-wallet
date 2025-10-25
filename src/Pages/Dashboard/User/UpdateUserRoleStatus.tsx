@@ -8,7 +8,7 @@ import UpdateUserRoleStatusUi from "./UpdateUserRoleStatusUi";
 
 const apiFieldMap = {
 	ROLE: "role",
-	STATUS: "is_active",
+	STATUS: "status",
 } as const;
 
 const UpdateUserRoleStatus: React.FC = () => {

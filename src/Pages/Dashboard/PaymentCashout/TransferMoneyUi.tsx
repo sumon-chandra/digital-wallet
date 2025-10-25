@@ -89,7 +89,7 @@ const TransferMoneyUi: React.FC<Props> = ({
 							</TableRow>
 						) : users.length ? (
 							users.map((u) => (
-								<TableRow key={u._id}>
+								<TableRow key={u.id}>
 									<TableCell className="text-foreground">{u.name}</TableCell>
 									<TableCell className="text-foreground">{u.email}</TableCell>
 									<TableCell className="text-foreground">{u.phone}</TableCell>

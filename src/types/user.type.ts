@@ -18,16 +18,17 @@ export interface IUser {
 }
 
 export interface IUserResponse {
-	id: number;
+	id: string;
 	name: string;
 	email: string;
 	phone: string;
 	role: Role;
+	isEmailVerified: boolean;
 	photoUrl?: string;
 	address: string;
 	balance: number;
 	status: IsActive;
 	joinDate: string;
 	lastActive: string;
-	transactions: number;
+	transactionCount: number;
 }

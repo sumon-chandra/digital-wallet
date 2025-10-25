@@ -1,8 +1,8 @@
-import AllUserUi from "./AllUserUi";
 import { useLocation } from "react-router-dom";
 import { User as UserIcon } from "lucide-react";
-import SkeletonCard from "@/components/SkeletonCard";
 import { useGetAllAgentQuery, useGetAllUserQuery } from "@/redux/api/adminApi";
+import { AllUserUi } from "./AllUserUi";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 const AllUsers = () => {
 	const location = useLocation();
@@ -17,16 +17,18 @@ const AllUsers = () => {
 
 	return (
 		<>
-			<h2 style={{ color: "var(--card-foreground)" }} className="text-2xl ml-2 font-semibold mb-6">
-				{isUser ? "All Users" : "All Agents"} Dashboard
-			</h2>
-
 			{isLoading ? (
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-					{[...Array(6)].map((_, i) => (
-						<SkeletonCard key={i} />
-					))}
-				</div>
+				function SkeletonRow() {
+					return (
+						<TableRow>
+							{[...Array(8)].map((_, i) => (
+								<TableCell key={i}>
+									<div className="h-4 bg-muted rounded animate-pulse" />
+								</TableCell>
+							))}
+						</TableRow>
+					);
+				}
 			) : !data || data.length === 0 ? (
 				<div className="text-center py-12">
 					<UserIcon className="mx-auto h-12 w-12 text-gray-400" />
@@ -34,7 +36,16 @@ const AllUsers = () => {
 					<p style={{ color: "var(--ring)" }}>There are currently no {isUser ? "users" : "agents"} in the system.</p>
 				</div>
 			) : (
-				<AllUserUi data={data} type={isUser ? "user" : "agent"} />
+				// <AllUserUi data={data} type={isUser ? "user" : "agent"} />
+				<main className="">
+					<div className="">
+						<div className="mb-8">
+							<h1 className="text-3xl font-bold mb-2">{isUser ? "All Users" : "All Agents"} Dashboard</h1>
+							<p className="text-muted-foreground">View and manage all users in the system</p>
+						</div>
+						<AllUserUi data={data} type={isUser ? "user" : "agent"} />
+					</div>
+				</main>
 			)}
 		</>
 	);

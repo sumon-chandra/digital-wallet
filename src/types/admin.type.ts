@@ -1,3 +1,5 @@
+import type { IUserResponse } from "./user.type";
+
 interface Auth {
 	provider: string;
 	providerId: string;
@@ -36,7 +38,7 @@ export interface UsersResponse {
 	success: boolean;
 	message: string;
 	meta: Meta;
-	data: User[];
+	data: IUserResponse[];
 }
 
 export interface Transaction {

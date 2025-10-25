@@ -2,16 +2,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCreateTransferMutation, useLazyGetAllUserQuery } from "@/redux/api/userApi";
 import TransferMoneyUi from "./TransferMoneyUi";
-import type { User } from "@/types/admin.type";
 import { handleApiError } from "@/utils/handleApiError";
 import { toast } from "sonner";
+import type { IUserResponse } from "@/types/user.type";
 
 export default function TransferMoney() {
 	const [search, setSearch] = useState("");
 	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(10);
-	const [selectedUser, setSelectedUser] = useState<User | null>(null);
+	const [selectedUser, setSelectedUser] = useState<IUserResponse | null>(null);
 	const [amount, setAmount] = useState<string>("");
 
 	const [triggerGetUsers, { data: usersRes, isFetching, isError }] = useLazyGetAllUserQuery();
@@ -40,10 +40,10 @@ export default function TransferMoney() {
 		triggerGetUsers(queryParams);
 	}, [triggerGetUsers, queryParams]);
 
-	const users: User[] = usersRes?.data ?? [];
+	const users: IUserResponse[] = usersRes?.data ?? [];
 	const meta = usersRes?.meta ?? { page, limit, total: 0, totalPage: 1 };
 
-	const openSendDialog = (user: User) => {
+	const openSendDialog = (user: IUserResponse) => {
 		setSelectedUser(user);
 		setAmount("");
 	};
@@ -58,7 +58,7 @@ export default function TransferMoney() {
 		}
 		try {
 			await createTransfer({
-				receiver_id: selectedUser._id,
+				receiver_id: selectedUser.id,
 				amount: amt,
 			}).unwrap();
 			toast.success("Money sent successfully");

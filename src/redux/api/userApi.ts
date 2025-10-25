@@ -53,28 +53,11 @@ export const userApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ["User"],
 		}),
-		// getAllUser: builder.query<UsersResponse, { searchTerm?: string } | void>({
-		//   query: (params) => ({
-		//     url: "/user/all-users",
-		//     method: "GET",
-		//     body: params,
-		//   }),
-		//   providesTags: ["User"],
-		// }),
-
-		// /redux/api/userApi.ts
-		// getAllUser: builder.query<UsersResponse, { page?: number; limit?: number; searchTerm?: string; email?: string; phone?: string }>({
-		//   query: (params) => ({
-		//     url: '/api/w1/user/all-users',
-		//     method: 'GET',
-		//     params, // <-- this attaches ?page=&limit=&email=&phone=&searchTerm=
-		//   }),
-		// }),
 		getAllUser: builder.query<UsersResponse, GetAllUserParams>({
 			query: (params) => ({
 				url: "/users",
 				method: "GET",
-				params, // ✅ this works
+				params,
 			}),
 		}),
 	}),

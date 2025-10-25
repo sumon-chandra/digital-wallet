@@ -72,7 +72,7 @@ export const adminApi = baseApi.injectEndpoints({
 
 		updateUserRoleStatus: builder.mutation<UpdateUserRoleApiResponse, { id: string; body: any }>({
 			query: ({ id, body }) => ({
-				url: `/user/${id}`,
+				url: `/users/change-user-status-role/${id}`,
 				method: "PATCH",
 				body,
 			}),
