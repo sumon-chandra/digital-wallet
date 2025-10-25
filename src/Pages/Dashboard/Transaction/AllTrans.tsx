@@ -19,7 +19,7 @@ const AllTrans = () => {
 		endDate?: string;
 	}>({});
 	const [page, setPage] = useState(1);
-	const limit = 12;
+	const limit = 20;
 
 	const { data: adminData, isFetching: isAdminFetching } = useGetAllTransQuery({
 		page,
@@ -35,9 +35,10 @@ const AllTrans = () => {
 	const rawData = isAdmin ? adminData?.data?.data : userData?.data;
 	const data: ITransaction[] = Array.isArray(rawData) ? rawData : rawData?.data ?? [];
 	const meta = isAdmin
-		? adminData?.data?.meta ?? { page, limit, total: 0, totalPage: 1 }
-		: userData?.data.meta ?? { page, limit, total: 0, totalPage: 1 };
+		? adminData?.data?.meta ?? { page, limit, total: 0, totalPages: 1 }
+		: userData?.data.meta ?? { page, limit, total: 0, totalPages: 1 };
 	const isFetching = isAdmin ? isAdminFetching : isUserFetching;
+	// console.log({ data, meta });
 	return (
 		<>
 			<h2 style={{ color: "var(--card-foreground)" }} className="text-2xl ml-7 font-semibold mb-6">
@@ -65,10 +66,10 @@ const AllTrans = () => {
 				<div className="mt-10">
 					<Pagination
 						page={meta?.page}
-						totalPage={meta?.totalPage}
+						totalPage={meta?.totalPages}
 						total={meta?.total}
 						canGoPrev={meta?.page > 1}
-						canGoNext={meta?.page < meta.totalPage}
+						canGoNext={meta?.page < meta.totalPages}
 						onPrev={() => setPage(Math.max(1, page - 1))}
 						onNext={() => setPage(page + 1)}
 					/>

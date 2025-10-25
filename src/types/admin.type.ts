@@ -56,7 +56,7 @@ interface Meta {
 	page: number;
 	limit: number;
 	total: number;
-	totalPage: number;
+	totalPages: number;
 }
 
 export type TransactionType = "TOP_UP" | "WITHDRAW" | "SEND_MONEY" | "RECEIVE_MONEY" | "CASH_IN" | "CASH_OUT";

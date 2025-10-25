@@ -39,7 +39,6 @@ export default function Navbar() {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const userData = profileData?.data;
-	console.log("🧑‍💼 User Data in Navbar:", userData);
 
 	const isAuthenticated = !!userData;
 

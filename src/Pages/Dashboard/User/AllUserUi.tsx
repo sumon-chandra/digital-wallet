@@ -132,7 +132,7 @@ export function AllUserUi<T extends IUserResponse>({ data }: AllUserUiProps<T>) 
 				</TableHeader>
 				<TableBody>
 					{data.map((item) => (
-						<TableRow key={item.id} className="hover:bg-muted/50">
+						<TableRow key={item.id} className="hover:bg-accent/50 transition-colors">
 							<TableCell className="font-medium">{item.name}</TableCell>
 							<TableCell>
 								<div className="flex items-center gap-2">
