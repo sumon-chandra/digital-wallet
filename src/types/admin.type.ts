@@ -110,17 +110,21 @@ export interface CommissionResponse {
 		data: Commission[];
 	};
 }
-
+export interface WalletStatus {
+	ACTIVE: "ACTIVE";
+	INACTIVE: "INACTIVE";
+	BLOCKED: "BLOCKED";
+}
 export interface WalletUiProps {
 	data: Wallet[];
 }
 export interface Wallet {
 	_id: string;
-	user: string;
+	userId: string;
 	balance: number;
-	status: "ACTIVE" | "INACTIVE" | string; // extendable if more statuses exist
-	createdAt: string; // ISO date string
-	updatedAt: string; // ISO date string
+	status: WalletStatus[keyof WalletStatus];
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface AllWalletApiResponse {

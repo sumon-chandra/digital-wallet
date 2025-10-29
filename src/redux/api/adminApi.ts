@@ -49,7 +49,7 @@ export const adminApi = baseApi.injectEndpoints({
 		}),
 		getAllWallet: builder.query<AllWalletApiResponse, void>({
 			query: () => ({
-				url: "/wallet/all-wallet",
+				url: "/wallet/all-wallets",
 				method: "GET",
 			}),
 			providesTags: ["Admin"],
