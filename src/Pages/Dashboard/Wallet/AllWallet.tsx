@@ -1,23 +1,33 @@
 import { useGetYourWalletQuery } from "@/redux/api/userApi";
 import { useLocation } from "react-router-dom";
 import { User as UserIcon } from "lucide-react";
-import SkeletonCard from "@/components/SkeletonCard";
 import WalletUi from "./WalletUi";
 import { useGetAllWalletQuery } from "@/redux/api/adminApi";
 import type { Wallet } from "@/types/admin.type";
+import TableSkeleton from "@/components/TableSkeleton";
+import { useState } from "react";
+import Pagination from "@/components/Pagination";
 
 const AllWallet = () => {
 	const location = useLocation();
+	const [page, setPage] = useState(1);
 
 	const isAdmin = location.pathname.includes("all-wallet");
 
-	const { data: adminData, isLoading: isAdminLoading } = useGetAllWalletQuery();
-	const { data: userData, isLoading: isUserLoading } = useGetYourWalletQuery();
+	const { data: adminData, isLoading: isAdminLoading } = useGetAllWalletQuery({
+		page,
+		limit: 20,
+	});
+	const { data: userData, isLoading: isUserLoading } = useGetYourWalletQuery({
+		page,
+		limit: 20,
+	});
 
 	const rawData = isAdmin ? adminData?.data?.data : userData?.data;
-	const data: Wallet[] = Array.isArray(rawData) //! Here is the converter
-		? rawData
-		: rawData?.data ?? [];
+	const data: Wallet[] = Array.isArray(rawData) ? rawData : rawData?.data ?? [];
+	const meta = isAdmin
+		? adminData?.data?.meta ?? { page, limit: 0, total: 0, totalPages: 1 }
+		: userData?.data.meta ?? { page, limit: 0, total: 0, totalPages: 1 };
 
 	const isLoading = isAdmin ? isAdminLoading : isUserLoading;
 
@@ -28,11 +38,7 @@ const AllWallet = () => {
 			</h2>
 
 			{isLoading ? (
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-					{[...Array(6)].map((_, i) => (
-						<SkeletonCard key={i} />
-					))}
-				</div>
+				<TableSkeleton />
 			) : !data || data.length === 0 ? (
 				<div className="text-center py-12">
 					<UserIcon className="mx-auto h-12 w-12 text-gray-400" />
@@ -42,6 +48,15 @@ const AllWallet = () => {
 			) : (
 				<WalletUi data={data} />
 			)}
+			<Pagination
+				page={meta?.page}
+				totalPage={meta?.totalPages}
+				total={meta?.total}
+				canGoPrev={meta?.page > 1}
+				canGoNext={meta?.page < meta.totalPages}
+				onPrev={() => setPage(Math.max(1, page - 1))}
+				onNext={() => setPage(page + 1)}
+			/>
 		</>
 	);
 };

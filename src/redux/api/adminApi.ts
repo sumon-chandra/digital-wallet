@@ -12,31 +12,41 @@ import type { SuccessResponse } from "@/types/api-response";
 
 export const adminApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		// redux/api/userApi.ts
-		getAllUser: builder.query<UsersResponse, { searchTerm?: string } | void>({
-			query: () => ({
-				url: "/users",
-				method: "GET",
-			}),
+		getAllUser: builder.query<UsersResponse, { searchTerm?: string; page?: number; limit?: number } | void>({
+			query: (args) => {
+				const { searchTerm, page, limit } = args ?? {};
+				return {
+					url: "/users",
+					method: "GET",
+					params: { searchTerm, page, limit },
+				};
+			},
 			providesTags: ["Admin"],
 		}),
 
-		getAllAgent: builder.query<UsersResponse, void>({
-			query: () => ({
-				url: "/users/agents",
-				method: "GET",
-			}),
+		getAllAgent: builder.query<UsersResponse, { page?: number; limit?: number } | void>({
+			query: (args) => {
+				const { page, limit } = args ?? {};
+				return {
+					url: "/users/agents",
+					method: "GET",
+					params: { page, limit },
+				};
+			},
 			providesTags: ["Admin"],
 		}),
 		getAllTrans: builder.query<
 			SuccessResponse<TransactionResponseData>,
-			{ page: number; limit: number; type?: string; startDate?: string; endDate?: string }
+			{ page?: number; limit?: number; type?: string; startDate?: string; endDate?: string } | void
 		>({
-			query: ({ page, limit, type, startDate, endDate }) => ({
-				url: "/transactions",
-				method: "GET",
-				params: { page, limit, type, startDate, endDate },
-			}),
+			query: (args) => {
+				const { page, limit, type, startDate, endDate } = args ?? {};
+				return {
+					url: "/transactions",
+					method: "GET",
+					params: { page, limit, type, startDate, endDate },
+				};
+			},
 			providesTags: ["Admin"],
 		}),
 
@@ -47,11 +57,15 @@ export const adminApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["Admin"],
 		}),
-		getAllWallet: builder.query<AllWalletApiResponse, void>({
-			query: () => ({
-				url: "/wallet/all-wallets",
-				method: "GET",
-			}),
+		getAllWallet: builder.query<AllWalletApiResponse, { page?: number; limit?: number } | void>({
+			query: (args) => {
+				const { page, limit } = args ?? {};
+				return {
+					url: "/wallet/all-wallets",
+					method: "GET",
+					params: { page, limit },
+				};
+			},
 			providesTags: ["Admin"],
 		}),
 		getCapitalWallet: builder.query<AllWalletApiResponse, void>({

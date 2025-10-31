@@ -37,8 +37,10 @@ export interface UsersResponse {
 	statusCode: number;
 	success: boolean;
 	message: string;
-	meta: Meta;
-	data: IUserResponse[];
+	data: {
+		data: IUserResponse[];
+		meta: Meta;
+	};
 }
 
 export interface Transaction {
@@ -133,6 +135,7 @@ export interface AllWalletApiResponse {
 	message: string;
 	data: {
 		data: Wallet[];
+		meta: Meta;
 	};
 }
 

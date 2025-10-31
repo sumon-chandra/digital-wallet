@@ -63,17 +63,15 @@ const AllTrans = () => {
 					)}
 				</div>
 
-				<div className="mt-10">
-					<Pagination
-						page={meta?.page}
-						totalPage={meta?.totalPages}
-						total={meta?.total}
-						canGoPrev={meta?.page > 1}
-						canGoNext={meta?.page < meta.totalPages}
-						onPrev={() => setPage(Math.max(1, page - 1))}
-						onNext={() => setPage(page + 1)}
-					/>
-				</div>
+				<Pagination
+					page={meta?.page}
+					totalPage={meta?.totalPages}
+					total={meta?.total}
+					canGoPrev={meta?.page > 1}
+					canGoNext={meta?.page < meta.totalPages}
+					onPrev={() => setPage(Math.max(1, page - 1))}
+					onNext={() => setPage(page + 1)}
+				/>
 			</div>
 		</>
 	);

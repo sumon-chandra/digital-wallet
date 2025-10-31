@@ -40,8 +40,8 @@ export default function TransferMoney() {
 		triggerGetUsers(queryParams);
 	}, [triggerGetUsers, queryParams]);
 
-	const users: IUserResponse[] = usersRes?.data ?? [];
-	const meta = usersRes?.meta ?? { page, limit, total: 0, totalPage: 1 };
+	const users: IUserResponse[] = usersRes?.data.data ?? [];
+	const meta = usersRes?.data.meta ?? { page, limit, total: 0, totalPage: 1 };
 
 	const openSendDialog = (user: IUserResponse) => {
 		setSelectedUser(user);

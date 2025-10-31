@@ -13,7 +13,7 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ page, totalPage, total, canGoPrev, canGoNext, onPrev, onNext }) => {
 	return (
-		<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+		<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-6">
 			<p className="text-sm text-muted-foreground">
 				Page {page} of {totalPage} • {total} result{total === 1 ? "" : "s"}
 			</p>

@@ -1,13 +1,11 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import type { TotalUserAgentProps } from "@/types/overview.type";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const TotalUserAgent: React.FC<TotalUserAgentProps> = ({ users, agents, transactions, totalCommission }) => {
-	console.log("TotalUserAgent Props:", { users, agents, transactions, totalCommission });
 	const stats = [
 		{ label: "Users", value: users.length, color: "#E60076" },
 		{ label: "Agents", value: agents.length, color: "#FF7F50" },

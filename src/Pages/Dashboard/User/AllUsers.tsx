@@ -2,33 +2,40 @@ import { useLocation } from "react-router-dom";
 import { User as UserIcon } from "lucide-react";
 import { useGetAllAgentQuery, useGetAllUserQuery } from "@/redux/api/adminApi";
 import { AllUserUi } from "./AllUserUi";
-import { TableCell, TableRow } from "@/components/ui/table";
+import TableSkeleton from "@/components/TableSkeleton";
+import { useState } from "react";
+import Pagination from "@/components/Pagination";
 
 const AllUsers = () => {
 	const location = useLocation();
+	const [page, setPage] = useState(1);
 
 	const isUser = location.pathname.includes("all-users");
 
-	const { data: userData, isLoading: isUserLoading } = useGetAllUserQuery();
-	const { data: agentData, isLoading: isAgentLoading } = useGetAllAgentQuery();
+	const { data: userData, isLoading: isUserLoading } = useGetAllUserQuery({
+		page,
+		limit: 20,
+	});
+	const { data: agentData, isLoading: isAgentLoading } = useGetAllAgentQuery({
+		page,
+		limit: 20,
+	});
 
-	const data = isUser ? userData?.data : agentData?.data;
+	console.log({
+		userData: userData,
+		agentData: agentData,
+	});
+
+	const data = isUser ? userData?.data?.data : agentData?.data?.data;
+	const meta = isUser
+		? userData?.data.meta ?? { page, limit: 0, total: 0, totalPages: 1 }
+		: agentData?.data.meta ?? { page, limit: 0, total: 0, totalPages: 1 };
 	const isLoading = isUser ? isUserLoading : isAgentLoading;
 
 	return (
 		<>
 			{isLoading ? (
-				function SkeletonRow() {
-					return (
-						<TableRow>
-							{[...Array(8)].map((_, i) => (
-								<TableCell key={i}>
-									<div className="h-4 bg-muted rounded animate-pulse" />
-								</TableCell>
-							))}
-						</TableRow>
-					);
-				}
+				<TableSkeleton />
 			) : !data || data.length === 0 ? (
 				<div className="text-center py-12">
 					<UserIcon className="mx-auto h-12 w-12 text-gray-400" />
@@ -38,13 +45,20 @@ const AllUsers = () => {
 			) : (
 				// <AllUserUi data={data} type={isUser ? "user" : "agent"} />
 				<main className="">
-					<div className="">
-						<div className="mb-8">
-							<h1 className="text-3xl font-bold mb-2">{isUser ? "All Users" : "All Agents"} Dashboard</h1>
-							<p className="text-muted-foreground">View and manage all users in the system</p>
-						</div>
-						<AllUserUi data={data} type={isUser ? "user" : "agent"} />
+					<div className="mb-8">
+						<h1 className="text-3xl font-bold mb-2">{isUser ? "All Users" : "All Agents"} Dashboard</h1>
+						<p className="text-muted-foreground">View and manage all users in the system</p>
 					</div>
+					<AllUserUi data={data} type={isUser ? "user" : "agent"} />
+					<Pagination
+						page={meta?.page}
+						totalPage={meta?.totalPages}
+						total={meta?.total}
+						canGoPrev={meta?.page > 1}
+						canGoNext={meta?.page < meta.totalPages}
+						onPrev={() => setPage(Math.max(1, page - 1))}
+						onNext={() => setPage(page + 1)}
+					/>
 				</main>
 			)}
 		</>

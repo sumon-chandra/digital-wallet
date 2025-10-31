@@ -21,7 +21,7 @@ export const userApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ["User"],
 		}),
-		getYourTrans: builder.query<TransactionApiResponse, { page: number; limit: number; type?: string; startDate?: string; endDate?: string }>({
+		getYourTrans: builder.query<TransactionApiResponse, { page?: number; limit?: number; type?: string; startDate?: string; endDate?: string }>({
 			query: ({ page, limit, type, startDate, endDate }) => ({
 				url: "/trans/your-transactions",
 				method: "GET",
@@ -30,11 +30,15 @@ export const userApi = baseApi.injectEndpoints({
 			providesTags: ["User"],
 		}),
 
-		getYourWallet: builder.query<AllWalletApiResponse, void>({
-			query: () => ({
-				url: "/wallet/my-wallet",
-				method: "GET",
-			}),
+		getYourWallet: builder.query<AllWalletApiResponse, { page?: number; limit?: number } | void>({
+			query: (args) => {
+				const { page, limit } = args ?? {};
+				return {
+					url: "/wallet/my-wallet",
+					method: "GET",
+					params: { page, limit },
+				};
+			},
 			providesTags: ["User"],
 		}),
 		createWithdraw: builder.mutation<WithdrawResponse, void>({

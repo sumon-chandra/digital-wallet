@@ -9,7 +9,7 @@ import RecentActivitiesUi from "./RecentActivitiesUi";
 
 const Overview = () => {
 	const { data: userData } = useGetMyProfileQuery(undefined);
-	const { data: walletData, isLoading: isWalletLoading } = useGetYourWalletQuery(undefined);
+	const { data: walletData, isLoading: isWalletLoading } = useGetYourWalletQuery();
 	const role = userData?.data?.role;
 	const sidebarItems = getSidebarItems(role as TRole);
 
@@ -40,8 +40,8 @@ const Overview = () => {
 			{/* Admin Overview Section */}
 			{role === "ADMIN" && (
 				<TotalUserAgent
-					users={allUsers?.data || []}
-					agents={allAgents?.data || []}
+					users={allUsers?.data.data || []}
+					agents={allAgents?.data.data || []}
 					transactions={allTrans?.data.meta.total || 0}
 					totalCommission={allTrans?.data.meta.totalCommission || 0}
 					data={undefined}
