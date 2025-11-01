@@ -69,6 +69,7 @@ function ActionMenu() {
 }
 
 export function AllUserUi<T extends IUserResponse>({ data }: AllUserUiProps<T>) {
+	// console.log(data);
 	const [copiedId, setCopiedId] = useState<string | null>(null);
 
 	const handleCopyId = async (id: string) => {
@@ -142,7 +143,7 @@ export function AllUserUi<T extends IUserResponse>({ data }: AllUserUiProps<T>) 
 							</TableCell>
 							<TableCell>
 								<button
-									onClick={() => handleCopyId(item.id)}
+									onClick={() => handleCopyId(item.id!)}
 									className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors group"
 									title="Copy ID"
 								>

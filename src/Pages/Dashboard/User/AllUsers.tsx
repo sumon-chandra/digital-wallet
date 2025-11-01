@@ -21,11 +21,6 @@ const AllUsers = () => {
 		limit: 20,
 	});
 
-	console.log({
-		userData: userData,
-		agentData: agentData,
-	});
-
 	const data = isUser ? userData?.data?.data : agentData?.data?.data;
 	const meta = isUser
 		? userData?.data.meta ?? { page, limit: 0, total: 0, totalPages: 1 }

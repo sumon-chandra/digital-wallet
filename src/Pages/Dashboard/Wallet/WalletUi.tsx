@@ -24,22 +24,22 @@ interface WalletUiProps {
 
 const statusColors: Record<string, { bg: string; text: string; border: string; icon: JSX.Element }> = {
 	ACTIVE: {
-		bg: "bg-green-100",
-		text: "text-green-800",
-		border: "border-green-200",
-		icon: <TrendingUp className="h-3 w-3 mr-1" />,
+		bg: "bg-primary/10",
+		text: "text-primary",
+		border: "border-primary/30",
+		icon: <TrendingUp className="size-3 mr-1" />,
 	},
 	INACTIVE: {
-		bg: "bg-red-100",
-		text: "text-red-800",
-		border: "border-red-200",
-		icon: <RefreshCw className="h-3 w-3 mr-1" />,
+		bg: "bg-yellow-600/10",
+		text: "text-yellow-700",
+		border: "border-yellow-400/30",
+		icon: <RefreshCw className="size-3 mr-1" />,
 	},
-	DEFAULT: {
-		bg: "bg-gray-100",
-		text: "text-gray-800",
-		border: "border-gray-200",
-		icon: <RefreshCw className="h-3 w-3 mr-1" />,
+	BLOCKED: {
+		bg: "bg-destructive/10",
+		text: "text-destructive",
+		border: "border-destructive/30",
+		icon: <RefreshCw className="size-3 mr-1" />,
 	},
 };
 
@@ -85,7 +85,7 @@ const WalletUi = ({ data }: WalletUiProps) => {
 						<Link to={navigateTo("add-money-wallet")!}>Add Money</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem className="text-destructive hover:text-destructive/80">
-						<Link to={navigateTo("block-wallet")!}>Block Wallet</Link>
+						<Link to={navigateTo("block-wallet")!}>Change Wallet Status</Link>
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
