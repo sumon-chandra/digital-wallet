@@ -12,25 +12,25 @@ import type { SuccessResponse } from "@/types/api-response";
 
 export const adminApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		getAllUser: builder.query<UsersResponse, { searchTerm?: string; page?: number; limit?: number } | void>({
+		getAllUser: builder.query<UsersResponse, { search?: string; page?: number; limit?: number; status?: string; emailVerified?: string } | void>({
 			query: (args) => {
-				const { searchTerm, page, limit } = args ?? {};
+				const { search, page, limit, status, emailVerified } = args ?? {};
 				return {
 					url: "/users",
 					method: "GET",
-					params: { searchTerm, page, limit },
+					params: { search, page, limit, status, emailVerified },
 				};
 			},
 			providesTags: ["Admin"],
 		}),
 
-		getAllAgent: builder.query<UsersResponse, { page?: number; limit?: number } | void>({
+		getAllAgent: builder.query<UsersResponse, { search?: string; page?: number; limit?: number; status?: string } | void>({
 			query: (args) => {
-				const { page, limit } = args ?? {};
+				const { search, page, limit, status } = args ?? {};
 				return {
 					url: "/users/agents",
 					method: "GET",
-					params: { page, limit },
+					params: { search, page, limit, status },
 				};
 			},
 			providesTags: ["Admin"],
