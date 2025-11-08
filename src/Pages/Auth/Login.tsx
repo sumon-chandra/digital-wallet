@@ -31,9 +31,9 @@ const Login = () => {
 
 			if (result.token) sessionStorage.setItem("authToken", result.token);
 
-			if (result?.data?.user?.is_active === "BLOCKED" || result?.data?.user?.is_active === "SUSPEND") {
+			if (result?.data?.user?.isActive === "BLOCKED" || result?.data?.user?.isActive === "SUSPEND") {
 				navigate("/login");
-				toast.error(`User is ${result?.data?.user?.is_active}`);
+				toast.error(`Your are ${result?.data?.user?.isActive.toLowerCase()}`);
 			} else {
 				toast.success("Logged in successfully!");
 				navigate("/");
