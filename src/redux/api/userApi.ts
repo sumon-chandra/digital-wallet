@@ -1,6 +1,6 @@
 import { baseApi } from "./baseApi";
 import type { TransferResponse, WithdrawResponse } from "@/types/withdraw.type";
-import type { AllWalletApiResponse, GetAllUserParams, TransactionApiResponse, UsersResponse } from "@/types/admin.type";
+import type { AllWalletApiResponse, GetAllUserParams, SingleUserResponse, TransactionApiResponse, UsersResponse } from "@/types/admin.type";
 import type { SuccessResponse } from "@/types/api-response";
 import type { IUser } from "@/types/user.type";
 
@@ -64,6 +64,13 @@ export const userApi = baseApi.injectEndpoints({
 				params,
 			}),
 		}),
+		getUser: builder.query<SingleUserResponse, { search: string }>({
+			query: ({ search }) => ({
+				url: "/users/get-user-by-phone-email",
+				method: "GET",
+				params: { search },
+			}),
+		}),
 	}),
 });
 
@@ -75,4 +82,5 @@ export const {
 	useCreateWithdrawMutation,
 	useCreateTransferMutation,
 	useLazyGetAllUserQuery,
+	useGetUserQuery,
 } = userApi;

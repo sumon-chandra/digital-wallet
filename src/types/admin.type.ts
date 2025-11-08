@@ -43,6 +43,14 @@ export interface UsersResponse {
 	};
 }
 
+export interface SingleUserResponse {
+	data: {
+		_id: string;
+		email: string;
+		name: string;
+	};
+}
+
 export interface Transaction {
 	_id: string;
 	user: string; // user id reference

@@ -15,6 +15,7 @@ export interface IUser {
 	isActive?: IsActive;
 	address?: string;
 	createdAt?: Date;
+	balance?: number;
 }
 
 export interface IUserResponse {

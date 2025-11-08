@@ -2,14 +2,13 @@ import QuickActionUi from "./QuickActionUi";
 import WalletBalanceUi from "./WalletBalanceUi";
 import TotalUserAgent from "./TotalUserAgent";
 import { getSidebarItems } from "@/utils/getSidebarItems";
-import { useGetMyProfileQuery, useGetYourWalletQuery } from "@/redux/api/userApi";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { useGetAllUserQuery, useGetAllAgentQuery, useGetAllTransQuery, useGetCapitalWalletQuery } from "@/redux/api/adminApi";
 import type { TRole } from "@/types/auth.type";
 import RecentActivitiesUi from "./RecentActivitiesUi";
 
 const Overview = () => {
-	const { data: userData } = useGetMyProfileQuery(undefined);
-	const { data: walletData, isLoading: isWalletLoading } = useGetYourWalletQuery();
+	const { data: userData, isLoading } = useGetMyProfileQuery(undefined);
 	const role = userData?.data?.role;
 	const sidebarItems = getSidebarItems(role as TRole);
 
@@ -27,7 +26,7 @@ const Overview = () => {
 			{role !== "ADMIN" && (
 				<div>
 					<h3 className="text-lg font-semibold">Wallet Balance</h3>
-					<WalletBalanceUi balance={walletData?.data?.data[0]?.balance || capitalWallet?.data.data[0].balance} loading={isWalletLoading} role={role} />
+					<WalletBalanceUi balance={userData?.data?.balance || capitalWallet?.data.data[0].balance} loading={isLoading} role={role} />
 				</div>
 			)}
 
