@@ -49,9 +49,9 @@ export const userApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ["User"],
 		}),
-		createTransfer: builder.mutation<TransferResponse, { receiver_id: string; amount: number }>({
+		createTransfer: builder.mutation<TransferResponse, { receiverId: string; amount: number }>({
 			query: (body) => ({
-				url: "/wallet/transfer-money",
+				url: "/wallet/send-money",
 				method: "POST",
 				body,
 			}),
@@ -64,11 +64,18 @@ export const userApi = baseApi.injectEndpoints({
 				params,
 			}),
 		}),
-		getUser: builder.query<SingleUserResponse, { search: string }>({
-			query: ({ search }) => ({
+		getUser: builder.query<SingleUserResponse, { search: string; method: string }>({
+			query: ({ search, method }) => ({
 				url: "/users/get-user-by-phone-email",
 				method: "GET",
-				params: { search },
+				params: { search, method },
+			}),
+		}),
+		selectUser: builder.query<SingleUserResponse, { search: string; method: string; role: string }>({
+			query: ({ search, method, role }) => ({
+				url: "/users/select-user-for-transaction",
+				method: "GET",
+				params: { search, method, role },
 			}),
 		}),
 	}),
@@ -83,4 +90,5 @@ export const {
 	useCreateTransferMutation,
 	useLazyGetAllUserQuery,
 	useGetUserQuery,
+	useSelectUserQuery,
 } = userApi;

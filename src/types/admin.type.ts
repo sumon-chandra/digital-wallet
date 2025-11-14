@@ -1,4 +1,4 @@
-import type { IUserResponse } from "./user.type";
+import type { IUserResponse, Role } from "./user.type";
 
 interface Auth {
 	provider: string;
@@ -48,6 +48,7 @@ export interface SingleUserResponse {
 		_id: string;
 		email: string;
 		name: string;
+		role: Role;
 	};
 }
 

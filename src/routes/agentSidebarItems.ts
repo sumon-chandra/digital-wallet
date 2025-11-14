@@ -3,6 +3,7 @@ import type { ISidebarItem } from "@/types/sidebar.type";
 import { lazy } from "react";
 import MyProfile from "@/Pages/Dashboard/User/MyProfile";
 import AllCommission from "@/Pages/Dashboard/Commission/AllCommission";
+import AllTrans from "@/Pages/Dashboard/Transaction/AllTrans";
 const Overview = lazy(() => import("@/Pages/Dashboard/Overview/Overview"));
 
 export const agentSidebarItems: ISidebarItem[] = [
@@ -24,17 +25,6 @@ export const agentSidebarItems: ISidebarItem[] = [
 		],
 	},
 	{
-		title: "Commission",
-		items: [
-			{
-				title: "All Commission",
-				url: "/agent/dashboard/agent-com",
-				component: AllCommission,
-				icon: "FiDollarSign",
-			},
-		],
-	},
-	{
 		title: "Wallet",
 		items: [
 			{
@@ -49,6 +39,28 @@ export const agentSidebarItems: ISidebarItem[] = [
 				url: "/agent/dashboard/wallet/withdraw",
 				component: WithdrawAdd,
 				icon: "FiMinusCircle",
+			},
+		],
+	},
+	{
+		title: "Transactions",
+		items: [
+			{
+				title: "All Transaction",
+				url: "/agent/dashboard/my-transactions",
+				component: AllTrans,
+				icon: "FiList",
+			},
+		],
+	},
+	{
+		title: "Commission",
+		items: [
+			{
+				title: "All Commission",
+				url: "/agent/dashboard/agent-com",
+				component: AllCommission,
+				icon: "FiDollarSign",
 			},
 		],
 	},
