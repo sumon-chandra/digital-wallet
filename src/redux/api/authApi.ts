@@ -7,7 +7,7 @@ export const authApi = baseApi.injectEndpoints({
 		// Signup
 		createUser: builder.mutation<{ message: string }, ISignup>({
 			query: (userData) => ({
-				url: "/user/register",
+				url: "/users/register",
 				method: "POST",
 				body: userData,
 			}),
