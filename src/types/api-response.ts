@@ -16,3 +16,14 @@ export interface ErrorResponse {
 	err: any;
 	stack: any;
 }
+
+export interface TransSummeryReportType {
+	date: Date;
+	cashIn: number;
+	cashOut: number;
+	sendMoney: number;
+	add: number;
+	withdraw: number;
+	total: number;
+	count: number;
+}

@@ -8,7 +8,7 @@ import type {
 	WalletApiResponse,
 } from "@/types/admin.type";
 import { baseApi } from "./baseApi";
-import type { SuccessResponse } from "@/types/api-response";
+import type { SuccessResponse, TransSummeryReportType } from "@/types/api-response";
 
 export const adminApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -45,6 +45,18 @@ export const adminApi = baseApi.injectEndpoints({
 					url: "/transactions",
 					method: "GET",
 					params: { page, limit, type, startDate, endDate },
+				};
+			},
+			providesTags: ["Admin"],
+		}),
+
+		getTransSummery: builder.query<SuccessResponse<TransSummeryReportType[]>, { startDate?: string; endDate?: string } | void>({
+			query: (args) => {
+				const { startDate, endDate } = args ?? {};
+				return {
+					url: "/transactions/summery",
+					method: "GET",
+					params: { startDate, endDate },
 				};
 			},
 			providesTags: ["Admin"],
@@ -99,6 +111,7 @@ export const {
 	useGetAllUserQuery,
 	useGetAllAgentQuery,
 	useGetAllTransQuery,
+	useGetTransSummeryQuery,
 	useGetAllCommissionQuery,
 	useGetAllWalletQuery,
 	useChangeWalletStatusMutation,

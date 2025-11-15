@@ -3,13 +3,22 @@ import WalletBalanceUi from "./WalletBalanceUi";
 import TotalUserAgent from "./TotalUserAgent";
 import { getSidebarItems } from "@/utils/getSidebarItems";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
-import { useGetAllUserQuery, useGetAllAgentQuery, useGetAllTransQuery, useGetCapitalWalletQuery } from "@/redux/api/adminApi";
+import {
+	useGetAllUserQuery,
+	useGetAllAgentQuery,
+	useGetAllTransQuery,
+	useGetCapitalWalletQuery,
+	useGetTransSummeryQuery,
+} from "@/redux/api/adminApi";
 import type { TRole } from "@/types/auth.type";
 import RecentActivitiesUi from "./RecentActivitiesUi";
+import { TransactionChart } from "@/components/TransactionChart";
+import { useEffect } from "react";
 
 const Overview = () => {
 	const { data: userData, isLoading } = useGetMyProfileQuery(undefined);
 	const role = userData?.data?.role;
+	// console.log("User Role in Overview:", role);
 	const sidebarItems = getSidebarItems(role as TRole);
 
 	const quickActions = sidebarItems.flatMap((group) => group.items).filter((item) => item.title !== "Dashboard");
@@ -18,6 +27,28 @@ const Overview = () => {
 	const { data: allUsers } = useGetAllUserQuery();
 	const { data: allAgents } = useGetAllAgentQuery();
 	const { data: allTrans, isLoading: isTransLoading } = useGetAllTransQuery({ page: 1, limit: 4 });
+	// only fetch transaction summary once we have the user id
+	const shouldFetchTransSummary = Boolean(userData?.data?._id);
+	console.log("shouldFetchTransSummary:", shouldFetchTransSummary);
+
+	const { data: transSummary, refetch: refetchTransSummary } = useGetTransSummeryQuery({
+		startDate: "",
+		endDate: "",
+	});
+	useEffect(() => {
+		if (shouldFetchTransSummary) {
+			console.log("Fetching transaction summary...");
+			refetchTransSummary();
+			console.log("transSummary after fetch:", transSummary);
+		}
+	}, [shouldFetchTransSummary, refetchTransSummary, transSummary]);
+	// const { data: transSummary, refetch: refetchTransSummary } = useGetTransSummeryQuery({
+	// 	startDate: "",
+	// 	endDate: "",
+	// 	walletId: "",
+	// 	userId: userData?.data?._id,
+	// 	role: role,
+	// });
 	const { data: capitalWallet } = useGetCapitalWalletQuery();
 
 	return (
@@ -49,6 +80,7 @@ const Overview = () => {
 
 			{/* Recent Transactions Section */}
 			<RecentActivitiesUi activities={allTrans?.data?.data || []} loading={isTransLoading} role={role} />
+			<TransactionChart chartData={transSummary?.data} loading={isTransLoading} refetchTransSummary={refetchTransSummary} />
 		</div>
 	);
 };
