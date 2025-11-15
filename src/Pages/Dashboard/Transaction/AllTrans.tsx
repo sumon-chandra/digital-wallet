@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useGetYourTransQuery } from "@/redux/api/userApi";
 import { useGetAllTransQuery } from "@/redux/api/adminApi";
 import { useLocation } from "react-router-dom";
-// import SkeletonCard from "@/components/SkeletonCard";
 import TransactionUi from "./TransactionUi";
 import type { ITransaction } from "@/types/admin.type";
 import { User as UserIcon } from "lucide-react";
@@ -21,24 +19,16 @@ const AllTrans = () => {
 	const [page, setPage] = useState(1);
 	const limit = 20;
 
-	const { data: adminData, isFetching: isAdminFetching } = useGetAllTransQuery({
-		page,
-		limit,
-		...filters,
-	});
-	const { data: userData, isFetching: isUserFetching } = useGetYourTransQuery({
+	const { data: adminData, isFetching: isFetching } = useGetAllTransQuery({
 		page,
 		limit,
 		...filters,
 	});
 
-	const rawData = isAdmin ? adminData?.data?.data : userData?.data;
-	const data: ITransaction[] = Array.isArray(rawData) ? rawData : rawData?.data ?? [];
-	const meta = isAdmin
-		? adminData?.data?.meta ?? { page, limit, total: 0, totalPages: 1 }
-		: userData?.data.meta ?? { page, limit, total: 0, totalPages: 1 };
-	const isFetching = isAdmin ? isAdminFetching : isUserFetching;
-	// console.log({ data, meta });
+	const rawData = adminData?.data?.data;
+	const data: ITransaction[] = Array.isArray(rawData) ? rawData : [];
+	const meta = adminData?.data?.meta ?? { page, limit, total: 0, totalPages: 1 };
+
 	return (
 		<>
 			<h2 style={{ color: "var(--card-foreground)" }} className="text-2xl ml-7 font-semibold mb-6">
