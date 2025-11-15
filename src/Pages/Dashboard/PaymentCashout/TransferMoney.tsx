@@ -58,7 +58,7 @@ export default function TransferMoney() {
 		}
 		try {
 			await createTransfer({
-				receiver_id: selectedUser.id,
+				receiverId: selectedUser.id,
 				amount: amt,
 			}).unwrap();
 			toast.success("Money sent successfully");
